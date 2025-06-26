@@ -1,39 +1,74 @@
+/* Global styles */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #121212;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0d0d0d;
+  color: #e0e0ff;
+  margin: 0;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* Glowing container */
 .container {
-    max-width: 700px;
-    margin: auto;
-    padding: 20px;
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  max-width: 700px;
+  width: 100%;
+  padding: 30px;
+  background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 25px rgba(155, 89, 255, 0.3),
+    0 0 40px rgba(155, 89, 255, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(155, 89, 255, 0.3);
+  text-align: center;
 }
 
+/* Heading */
 h1 {
-    font-size: 2.5rem;
-    color: #00f5d4;
+  font-size: 2.8rem;
+  color: #bb86fc;
+  text-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
+  margin-bottom: 10px;
 }
 
+/* Subheading */
+p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+/* File input */
+input[type="file"] {
+  padding: 10px;
+  background-color: #1e1e2f;
+  color: #eee;
+  border: 1px solid #bb86fc;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+/* Button */
 button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #00f5d4;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #bb86fc, #7b61ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(187, 134, 252, 0.4);
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #0df;
-}
-
-input[type="file"] {
-    margin: 20px 0;
+  background: linear-gradient(135deg, #a266ff, #5f45d5);
+  box-shadow: 0 0 25px rgba(187, 134, 252, 0.6);
 }

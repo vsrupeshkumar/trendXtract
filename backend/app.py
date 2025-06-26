@@ -1,22 +1,38 @@
-from flask import Flask, request, render_template
-from model import load_and_analyze
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import os
+import pandas as pd
+from model import analyze_uploaded_file
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'backend/data'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+CORS(app)  # ✅ Allows frontend (React) to connect to Flask
 
-@app.route('/', methods=['GET', 'POST'])
+# Route for your Flask HTML page (if you want to keep it)
+@app.route('/')
 def index():
-    topics = None
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and file.filename.endswith('.csv'):
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filepath)
-            topics = load_and_analyze(filepath)
-    return render_template('index.html', topics=topics)
+    return render_template('index.html')
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# Route for file uploads (from HTML form if needed)
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file']
+    if file:
+        filepath = os.path.join('data', file.filename)
+        file.save(filepath)
+        result = analyze_uploaded_file(filepath)
+        return render_template('index.html', result=result)
+
+# ✅ NEW: API endpoint for React frontend
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    data = request.get_json()
+    text = data.get('text', '')
+
+    # 🔁 Replace with your actual logic if needed
+    result = f"Emerging trend in: {text[:50]}..."
+
+    return jsonify({'result': result})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 

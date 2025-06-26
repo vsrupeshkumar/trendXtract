@@ -1,4 +1,0 @@
-Flask
-pandas
-nltk
-scikit-learn
