@@ -1,38 +1,29 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS
-import os
-import pandas as pd
-from model import analyze_uploaded_file
+import random
 
 app = Flask(__name__)
-CORS(app)  # ✅ Allows frontend (React) to connect to Flask
+CORS(app)  # Allow requests from React frontend
 
-# Route for your Flask HTML page (if you want to keep it)
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Example trending AI topics
+fake_topics = [
+    {"topic": "LLM Fine-Tuning", "growth": 66},
+    {"topic": "Open-Source Models", "growth": 59},
+    {"topic": "Synthetic Data", "growth": 52},
+    {"topic": "Multimodal AI", "growth": 84},
+    {"topic": "AGI Safety", "growth": 77},
+    {"topic": "Self-supervised Learning", "growth": 61},
+    {"topic": "AI Hardware Acceleration", "growth": 69},
+    {"topic": "Foundation Models", "growth": 75},
+    {"topic": "AI for Robotics", "growth": 64},
+]
 
-# Route for file uploads (from HTML form if needed)
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['file']
-    if file:
-        filepath = os.path.join('data', file.filename)
-        file.save(filepath)
-        result = analyze_uploaded_file(filepath)
-        return render_template('index.html', result=result)
+@app.route("/api/trends", methods=["GET"])
+def get_trends():
+    # Return shuffled trending topics
+    return jsonify({
+        "trending_topics": random.sample(fake_topics, k=5)
+    })
 
-# ✅ NEW: API endpoint for React frontend
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    data = request.get_json()
-    text = data.get('text', '')
-
-    # 🔁 Replace with your actual logic if needed
-    result = f"Emerging trend in: {text[:50]}..."
-
-    return jsonify({'result': result})
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-
